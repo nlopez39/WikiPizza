@@ -1,21 +1,25 @@
+const { User, BlogPost } = require("../models");
 const resolvers = {
   Query: {
-    blogPosts: () => [
-      {
-        id: 1,
-        title: "The Best Pizza Dough Recipe",
-        content: "This is a foolproof pizza dough recipe...",
-        author: "John Doe",
-        date: "2024-08-19",
-      },
-      {
-        id: 2,
-        title: "Top 5 Pizza Toppings You Should Try",
-        content: "From pepperoni to anchovies...",
-        author: "Jane Smith",
-        date: "2024-08-20",
-      },
-    ],
+    blogPosts: async () => {
+      return BlogPost.find({});
+    },
+  },
+  Mutation: {
+    addBlogPost: async (_, { title, content, author }) => {
+      if (!title || !content || !author) {
+        throw new Error("Must have all fields filled in!");
+      }
+      try {
+        const post = await BlogPost.create({
+          title,
+          content,
+          author,
+        });
+      } catch (err) {
+        throw new Error("Error creating blog post " + err.message);
+      }
+    },
   },
 };
 module.exports = resolvers;

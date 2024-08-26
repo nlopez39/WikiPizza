@@ -6,6 +6,8 @@ const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 //call the resolvers and typdefs from their folders:
 const { typeDefs, resolvers } = require("./schemas");
+//connect mongoDB database
+const db = require("./config/connection");
 
 //his initializes an Express application, which serves as the main web server.
 const app = express();
@@ -29,12 +31,21 @@ const startServer = async () => {
   app.use(express.json());
   //tells the server to handle requests sent to the /graphql endpoint. When a client sends a GraphQL query or mutation
   app.use("/graphql", expressMiddleware(server));
+  //db
+  db.once("open", () => {
+    console.log("MongoDB database connected successfully!");
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    });
+  });
+
   app.get("/", (req, res) => {
     res.send("Welcome the Pizza Blog");
   });
-  app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`);
-  });
+  //   app.listen(PORT, () => {
+  //     console.log(`Example app listening on port ${PORT}`);
+  //   });
 };
 
 startServer();
