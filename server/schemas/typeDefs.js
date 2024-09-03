@@ -1,10 +1,12 @@
 const typeDefs = `
 type BlogPost {
-    id: ID!
+    _id: ID!
     title: String!
     content: String!
     author: String!
-    date: String!
+    createdAt: String
+    updatedAt: String
+  
     
 }
 
@@ -13,6 +15,8 @@ type Query {
 }
 type Mutation{
     addBlogPost(title: String!, content:String!, author:String!): BlogPost
+    deleteBlogPost(_id:ID!): BlogPost
+    updateBlogPost(_id: ID!, title: String!,content: String!): BlogPost
    
 }
 `;

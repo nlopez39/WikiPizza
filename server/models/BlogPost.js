@@ -9,7 +9,11 @@ const blogpostschema = new Schema({
   author: {
     type: String,
   },
-  date: {
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     default: Date.now,
   },
