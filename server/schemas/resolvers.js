@@ -6,6 +6,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    //-------------------- BlogPost Mutations---------------------------
     addBlogPost: async (_, { title, content, author }) => {
       if (!title || !content || !author) {
         throw new Error("Must have all fields filled in!");
@@ -41,6 +42,7 @@ const resolvers = {
         console.log(err);
       }
     },
+    //------------------ User Mutations ---------------------------------------
   },
 };
 module.exports = resolvers;

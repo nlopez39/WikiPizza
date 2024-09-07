@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 const userSchema = new Schema({
-  username: {
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
     type: String,
     required: true,
   },
@@ -16,6 +21,19 @@ const userSchema = new Schema({
     minlength: 5,
   },
 });
-
+//hash the passwords before saving the document
+userSchema.pre("save", async function (next) {
+  //if this is a new document or the password has beeen modified then hash the password
+  if (this.isNew() || this.isModified("password")) {
+    const saltRound = 10;
+    this.password = await bcrypt.hash(this.password, saltRound);
+  }
+  //once this middleware is done, move onto the next
+  next();
+});
+//custom method that will check whether the password entered by the user matches that password in the DB
+userSchema.methods.isCorrectPassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
 const User = model("User", userSchema);
 module.exports = User;

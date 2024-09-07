@@ -9,6 +9,13 @@ type BlogPost {
   
     
 }
+type Users {
+    _id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    password: String!
+}
 
 type Query {
     blogPosts : [BlogPost]
