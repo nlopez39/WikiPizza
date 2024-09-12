@@ -4,6 +4,9 @@ const resolvers = {
     blogPosts: async () => {
       return BlogPost.find({});
     },
+    users: async () => {
+      return User.find({});
+    },
   },
   Mutation: {
     //-------------------- BlogPost Mutations---------------------------
@@ -43,6 +46,21 @@ const resolvers = {
       }
     },
     //------------------ User Mutations ---------------------------------------
+    signup: async (_, { firstname, lastname, email, password }) => {
+      try {
+        //create a user
+        const user = await User.create({
+          firstname,
+          lastname,
+          email,
+          password,
+        });
+        //create a token for that user
+        // const token =
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 module.exports = resolvers;
