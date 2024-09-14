@@ -6,9 +6,7 @@ const blogpostschema = new Schema({
   content: {
     type: String,
   },
-  author: {
-    type: String,
-  },
+  author: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: {
     type: Date,
     default: Date.now,
