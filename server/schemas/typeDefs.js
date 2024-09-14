@@ -3,18 +3,19 @@ type BlogPost {
     _id: ID!
     title: String!
     content: String!
-    author: String!
+    author: User
     createdAt: String
     updatedAt: String
   
     
 }
-type Users {
+type User {
     _id: ID!
     firstname: String!
     lastname: String!
     email: String!
     password: String!
+    blogposts: [BlogPost]
 }
 type Auth {
     token: ID!
@@ -23,12 +24,13 @@ type Auth {
 
 type Query {
     blogPosts : [BlogPost]
-    users : [Users]
+    users : [User]
+    singleuser(email:String!) : User
 }
 type Mutation{
     signup(firstname:String!, lastname:String!, email:String!, password:String!): Auth
     login(email:String!, password:String!): Auth
-    addBlogPost(title: String!, content:String!, author:String!): BlogPost
+    addBlogPost(title: String!, content:String!, authorId:ID!): BlogPost
     deleteBlogPost(_id:ID!): BlogPost
     updateBlogPost(_id: ID!, title: String!,content: String!): BlogPost
    
