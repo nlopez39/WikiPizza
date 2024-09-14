@@ -20,11 +20,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  blogposts: [{ type: Schema.Types.ObjectId, ref: "BlogPost" }],
 });
 //hash the passwords before saving the document
 userSchema.pre("save", async function (next) {
   //if this is a new document or the password has beeen modified then hash the password
-  if (this.isNew() || this.isModified("password")) {
+  if (this.isNew || this.isModified("password")) {
     const saltRound = 10;
     this.password = await bcrypt.hash(this.password, saltRound);
   }
