@@ -30,7 +30,15 @@ const resolvers = {
           content,
           author: authorId,
         });
-        return newBlogPost;
+        // Add the blog post to the user's blogposts array
+        await User.findByIdAndUpdate(authorId, {
+          $push: { blogposts: newBlogPost._id },
+        });
+        //populate the author field for the blogpost; was receiving error in GrpahQL that author parameters were not defined when I created a blog post
+        const populateBlogPost = await BlogPost.findById(
+          newBlogPost._id
+        ).populate("author");
+        return populateBlogPost;
       } catch (err) {
         throw new Error("Error creating blog post " + err.message);
       }
