@@ -19,7 +19,7 @@ const server = new ApolloServer({
   resolvers,
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 //start the server
 //These initializations are placed inside the startServer function to ensure that the Apollo Server is fully ready before handling any requests. It allows for proper sequencing of operations, like starting the server, applying middleware, and handling GraphQL requests—all of which rely on the server being configured correctly.
