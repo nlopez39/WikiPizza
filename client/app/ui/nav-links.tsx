@@ -1,5 +1,6 @@
 'use client'
 import { usePathname } from "next/navigation"
+import Image from 'next/image'
 import Link from 'next/link'
 
 export  function NavLinks(){
@@ -20,6 +21,7 @@ export  function NavLinks(){
     // </nav>
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
+  <Image src="/images/pizzaMain.png" className="rounded mx-auto d-block" alt="logo" width={80} height={80}/>
   <Link className="navbar-brand" href="/">WikiPizza</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
@@ -33,7 +35,7 @@ export  function NavLinks(){
       </Link>
         </li>
         <li className="nav-item">
-        <Link className={`nav-link ${pathname === '/dashboard' ? 'active' : ''}`} href="/posts">
+        <Link className={`nav-link ${pathname === '/blogpost' ? 'active' : ''}`} href="/blogpost">
       Posts
       </Link>
         </li>
