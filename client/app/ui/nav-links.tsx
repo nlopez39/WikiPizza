@@ -29,22 +29,38 @@ export  function NavLinks(){
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-        <Link className={`nav-link ${pathname === '/dashboard' ? 'active' : ''}`} href="/dashboard">
-      Dashboard
-      </Link>
-        </li>
+       
         <li className="nav-item">
         <Link className={`nav-link ${pathname === '/blogpost' ? 'active' : ''}`} href="/blogpost">
-      Posts
+       Blog
       </Link>
         </li>
-    
+        <li className="nav-item">
+        <Link className={`nav-link ${pathname === '/feed' ? 'active' : ''}`} href="/feed">
+      Feed
+      </Link>
+        </li>
+        <li className="nav-item">
+        <Link className={`nav-link ${pathname === '/popular' ? 'active' : ''}`} href="/popular">
+      Popular
+      </Link>
+        </li>
+      
       </ul>
-      <form className="d-flex" role="search">
+     
+      
+      {/* <form className="d-flex me-auto" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> */}
+      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li className="nav-item">
+        <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login">
+     Sign In
+      </Link>
+    </li>
+   
+      </ul>
     </div>
   </div>
 </nav>
