@@ -1,0 +1,16 @@
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+  
+}
+.form-horizontal {
+    width: 50%; /* Adjust the width of the form */
+    max-width: 600px; /* Optional: limit the maximum width */
+    padding: 20px; /* Optional: add padding */
+    background-color: #f9f9f9; /* Optional: background color */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional: add shadow */
+}

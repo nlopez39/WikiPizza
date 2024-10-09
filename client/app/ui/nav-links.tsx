@@ -56,7 +56,7 @@ export  function NavLinks(){
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
       <li className="nav-item">
         <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login">
-     Sign In
+    Sign Up / Log In
       </Link>
     </li>
    
