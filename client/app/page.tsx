@@ -10,6 +10,7 @@ export default function Page() {
       <Image src="/images/Pizza.png" className="rounded mx-auto d-block" alt="main page image" width={200} height={200}/>
      </div>
   <h1>Welcome to WikiPizza</h1>
+  <p>"Pizza is not a trend, it's a way of life." -Anonymous</p>
     </>
   )
 }
