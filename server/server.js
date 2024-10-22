@@ -1,5 +1,7 @@
 //initialize express
 const express = require("express");
+//require cors
+const cors = require("cors");
 //iniitalize Apollo Client server for GraphQL
 const { ApolloServer } = require("@apollo/server");
 //initialize Middleware that connects Apollo Server with Express, allowing GraphQL requests to be handled by the Express server.
@@ -27,10 +29,18 @@ const startServer = async () => {
   //operation that prepares the Apollo Server to handle incoming GraphQL requests
   //The await keyword ensures that the server is completely ready before any requests are processed.
   await server.start();
+  // Enable CORS for requests from your frontend (http://localhost:3000)
+  app.use(
+    cors({
+      origin: "http://localhost:3000", // Allow frontend requests
+      credentials: true, // If you're sending cookies or authentication headers
+    })
+  );
   //init express middleware that will read json data that is sent from the client to the server
   app.use(express.json());
   //tells the server to handle requests sent to the /graphql endpoint. When a client sends a GraphQL query or mutation
   app.use("/graphql", expressMiddleware(server));
+
   //db
   db.once("open", () => {
     console.log("MongoDB database connected successfully!");

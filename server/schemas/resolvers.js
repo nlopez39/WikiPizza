@@ -40,6 +40,7 @@ const resolvers = {
         ).populate("author");
         return populateBlogPost;
       } catch (err) {
+        console.log("Signup", err);
         throw new Error("Error creating blog post " + err.message);
       }
     },
@@ -74,8 +75,10 @@ const resolvers = {
           email,
           password,
         });
+        console.log("newly created user ", user);
         //create a token for that user
         const token = signToken(user);
+        console.log("token ", token);
 
         return { token, user };
       } catch (err) {

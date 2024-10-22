@@ -32,11 +32,13 @@ const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
 
 const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) =>{
 event.preventDefault(); 
+console.log("this worked 1");
 try{
   //send the variables to the login mutation function 
   const { data } = await login({
     variables: { ...formState },
   });
+  console.log("this worked 2");
   console.log(data);
   //store the login token into localstorage
   Auth.login(data.login.token);
