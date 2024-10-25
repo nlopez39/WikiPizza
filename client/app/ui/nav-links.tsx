@@ -1,10 +1,31 @@
-'use client'
+'use client';
+import React, {MouseEvent,useState, useEffect} from 'react';
 import { usePathname } from "next/navigation"
 import Image from 'next/image'
 import Link from 'next/link'
+//this will import authentication methods from auth.js
+import Auth from '../utils/auth'
+
 
 export  function NavLinks(){
  const pathname = usePathname(); 
+  // got a hydration error: Text content does not match server-rendered HTML, needed to add a useEffect 
+  const [isClient, setIsClient] = useState(false);
+  useEffect(()=>{
+    setIsClient(true);
+  }, [])
+   // Check if we're on the client (since window is not available server-side)
+  const isLoggedIn = typeof window !== 'undefined' ? Auth.loggedIn() : false;
+  console.log("Is user logged in? ", isLoggedIn);
+
+ const logout = (event: MouseEvent) =>{
+  event.preventDefault(); 
+  console.log("User is logging out..."); // Log the logout action
+  if (typeof window !== 'undefined') {
+    Auth.logout();
+  }
+ 
+ }
 
  return (
     // <nav>
@@ -55,9 +76,12 @@ export  function NavLinks(){
       </form> */}
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login">
+      {isLoggedIn && isClient ? 
+       <Link onClick={logout} className={`nav-link ${pathname === '/' ? 'active' : ''}`}href="/">
+    Logout
+      </Link> :   <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login">
     Sign Up / Log In
-      </Link>
+      </Link>}
     </li>
    
       </ul>

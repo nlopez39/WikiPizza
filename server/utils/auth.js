@@ -1,6 +1,6 @@
 require("dotenv").config();
 //class used to create custom errors
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
+// console.log("JWT_SECRET:", process.env.JWT_SECRET);
 const { GraphQLError } = require("graphql");
 //package that allows us to sign and verify JWTs
 const jwt = require("jsonwebtoken");

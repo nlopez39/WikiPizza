@@ -1,48 +1,69 @@
-import decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
-//class Authservice that will handle authentication tasks using JWT
+// AuthService handles authentication tasks using JWT
 class AuthService {
-  //decodes the current JWT retrived from getToken() to extract user's profile info(payload from the token)
+  // Decodes the current JWT retrieved from getToken() to extract the user's profile info (payload from the token)
   getProfile() {
-    //decode comes from the jwt-library
-    return decode(this.getToken());
+    const token = this.getToken();
+    return token ? jwtDecode(token) : null;
   }
-  //checks whether the user is logged in by validating token
+
+  // Checks whether the user is logged in by validating the token
   loggedIn() {
     const token = this.getToken();
-    //checks if the token exists and is not expired- returns true if both are met or otherwise false
-    // If there is a token and it's not expired, return `true`
-    return token && !this.isTokenExpired(token) ? true : false;
+    console.log("This is the token ", token);
+    // Checks if the token exists and is not expired. Returns true if both are met; otherwise, false
+    return token && !this.isTokenExpired(token);
   }
 
+  // Checks if the token is expired
   isTokenExpired(token) {
-    // Decode the token to get its expiration time that was set by the server
-    const decoded = decode(token);
-    //compares the expiration time to the current time
-    // If the expiration time is less than the current time (in seconds), the token is expired and we return `true`
-    if (decoded.exp < Date.now() / 1000) {
-      //if expired it removes the token from localStorage
-      localStorage.removeItem("id_token");
-      return true;
+    try {
+      const decoded = jwtDecode(token);
+      console.log("Decoded Token", decoded);
+      // Compares the expiration time to the current time (in seconds)
+      if (decoded.exp < Date.now() / 1000) {
+        // If expired, remove the token from localStorage
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("id_token");
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Invalid token", error);
+      return true; // Consider invalid token as expired
     }
-    // If token hasn't passed its expiration time, return `false`
-    return false;
   }
-  //retrives the JWT from localstorage under id_token
+
+  // Retrieves the JWT from localStorage under "id_token"
   getToken() {
-    return localStorage.getItem("id_token");
+    // Ensure code runs only on the client
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("id_token");
+      console.log("Retrieved token from localStorage:", token);
+      //   return localStorage.getItem("id_token");
+      return token;
+    }
+    return null; // No token available server-side
   }
-  //stores the provided token idToken in localstorage under id_token
+
+  // Stores the provided token (idToken) in localStorage under "id_token"
   login(idToken) {
-    localStorage.setItem("id_token", idToken);
-    //redirects the user to homepage after login
-    window.location.assign("/");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("id_token", idToken);
+      // Redirects the user to the homepage after login
+      window.location.assign("/");
+    }
   }
-  //removes the JWT from localstorage, effectively logging out the user
+
+  // Removes the JWT from localStorage, effectively logging out the user
   logout() {
-    localStorage.removeItem("id_token");
-    //reloads the page to ensure the logout is reflected in the UI
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("id_token");
+      // Reloads the page to ensure the logout is reflected in the UI
+      window.location.reload();
+    }
   }
 }
 
