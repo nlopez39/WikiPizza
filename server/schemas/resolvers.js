@@ -1,5 +1,6 @@
 const { User, BlogPost } = require("../models");
 //import signToken and AuthenticationError functions from the auth.js
+
 const { signToken, AuthenticationError } = require("../utils/auth");
 const resolvers = {
   Query: {
@@ -15,20 +16,20 @@ const resolvers = {
   },
   Mutation: {
     //-------------------- BlogPost Mutations---------------------------
-    addBlogPost: async (_, { title, content, authorId }) => {
-      if (!title || !content || !authorId) {
+    addBlogPost: async (parent, { title, content }, context) => {
+      // console.log("Context", context.req.body.variables.authorId);
+      console.log("Context 2", context);
+      if (!title || !content) {
         throw new Error("Must have all fields filled in!");
       }
       try {
-        //check if the author exists
-        const author = await User.findById(authorId);
-        if (!author) {
+        if (!context.userId) {
           throw new Error("Author not found");
         }
         const newBlogPost = await BlogPost.create({
           title,
           content,
-          author: authorId,
+          authorId: context.userId,
         });
         // Add the blog post to the user's blogposts array
         await User.findByIdAndUpdate(authorId, {
@@ -97,6 +98,7 @@ const resolvers = {
         throw AuthenticationError;
       }
       const token = signToken(user);
+      console.log("This is the user data : ", user);
 
       return { token, user };
     },

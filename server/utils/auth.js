@@ -23,6 +23,7 @@ module.exports = {
   //This middleware function checks incoming requests to see if they have a valid token and verifies it. If the token is valid, it adds the user’s information to the req object so that the server knows who is making the request.
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
+    console.log(token);
 
     //if the token is in the header than split and  trim the header down to just get the -> Bearer< token> syntax
     if (req.headers.authorization) {
@@ -40,6 +41,8 @@ module.exports = {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       //if token is vaild then the decoded data is attached  req.user
       req.user = data;
+
+      console.log("USER DATA from token", req.user);
       //example of req.user will look like
       // {  email : "test@email.com"
       //      _id: 123
@@ -57,6 +60,32 @@ module.exports = {
     //payload will consist of email and id
     const payload = { email, _id };
     //creates the token with the payload, secret and expiration
+    console.log("expiration", expiration);
+    console.log("secret", secret);
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
+  getUserId: function (token) {
+    console.log("the getUserId is working");
+    console.log("getuserID token:", token);
+    if (!token) {
+      throw new Error("No token provided");
+    }
+    // Remove "Bearer " prefix if it’s present
+    token = token.startsWith("Bearer ") ? token.slice(7) : token;
+    console.log("Token after removing 'Bearer' prefix:", token);
+    try {
+      const decoded = jwt.verify(token, secret);
+      console.log("DECODED token", decoded);
+      const userId = decoded.data._id; // Adjusted to access the ID correctly
+      console.log("USERID", userId);
+      return userId; // Return the user ID
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      throw new GraphQLError("Invalid token", {
+        extensions: {
+          code: "UNAUTHENTICATED",
+        },
+      });
+    }
   },
 };

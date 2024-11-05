@@ -30,7 +30,7 @@ type Query {
 type Mutation{
     signup(firstname:String!, lastname:String!, email:String!, password:String!): Auth
     login(email:String!, password:String!): Auth
-    addBlogPost(title: String!, content:String!, authorId:ID!): BlogPost
+    addBlogPost(title: String!, content:String!): BlogPost
     deleteBlogPost(_id:ID!): BlogPost
     updateBlogPost(_id: ID!, title: String!,content: String!): BlogPost
    

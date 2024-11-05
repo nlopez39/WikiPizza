@@ -1,5 +1,6 @@
 //this is the code that will output on the page, you can also import the blogpost component here 
 //make a post
+import {useState} from 'react';
 import './style.css';
 export default function Page(){
 
