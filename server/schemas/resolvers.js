@@ -18,7 +18,8 @@ const resolvers = {
     //-------------------- BlogPost Mutations---------------------------
     addBlogPost: async (parent, { title, content }, context) => {
       // console.log("Context", context.req.body.variables.authorId);
-      console.log("Context 2", context);
+      // console.log("UserId", context.userId);
+      var authorId = context.userId;
       if (!title || !content) {
         throw new Error("Must have all fields filled in!");
       }
@@ -29,8 +30,9 @@ const resolvers = {
         const newBlogPost = await BlogPost.create({
           title,
           content,
-          authorId: context.userId,
+          author: authorId,
         });
+
         // Add the blog post to the user's blogposts array
         await User.findByIdAndUpdate(authorId, {
           $push: { blogposts: newBlogPost._id },
