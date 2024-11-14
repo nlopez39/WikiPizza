@@ -25,7 +25,7 @@ type Auth {
 type Query {
     blogPosts : [BlogPost]
     users : [User]
-    singleuser(email:String!) : User
+    singleuser(_id:ID!) : User
 }
 type Mutation{
     signup(firstname:String!, lastname:String!, email:String!, password:String!): Auth

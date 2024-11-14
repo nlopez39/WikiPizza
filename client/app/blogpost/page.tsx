@@ -1,14 +1,32 @@
 //this is the code that will output on the page, you can also import the blogpost component here 
 //make a post
 "use client";
-import React, { useState} from 'react';
+import { jwtDecode } from "jwt-decode";
+import React, { useState, useContext} from 'react';
 import './style.css';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_POST } from '../utils/mutations';
+import {GET_POST} from '../utils/queries';
 export default function Page(){
 
+
+// Decode the token to retrieve userId
+const token = localStorage.getItem('id_token'); // Retrieve the token from local storage or wherever you store it
+var userId =0; 
+if(token){
+    const decodedToken: any = jwtDecode(token);
+  console.log("decodedToken", decodedToken);
+  userId = decodedToken.data._id; // Access the 'userId' claim from the decoded token
+  console.log("usr", userId);
+}
   const [formState, setFormState]  = useState({title:"", content:""});
-  const [addBlogPost, {error, data}] = useMutation(CREATE_POST);
+  //the refetchquery is an Apollo Client method that will help the UI reload with the new query that was just created- it refetches queries from the server
+  const [addBlogPost, {error}] = useMutation(CREATE_POST, {
+    refetchQueries: [GET_POST]
+  });
+  //this will allow us to map the new post under the create new post box
+  const { loading, data } = useQuery(GET_POST);
+    console.log("usrId", userId);
   const handleFormChange =(event: React.ChangeEvent<HTMLTextAreaElement>) =>{
     const {name, value} = event.target; 
     setFormState({
@@ -32,7 +50,8 @@ export default function Page(){
   };
   
 
-    return <div className='form-container'>
+    return<>
+    <div className='form-container'>
          <form onSubmit={handleFormSubmit} className="form-horizontal"  role="form">
     <div className="mb-3">
       <label className="form-label">Title</label>
@@ -48,5 +67,21 @@ export default function Page(){
     <button type="submit" className="btn btn-primary">Post</button>
   </form>
     </div>
+    <div>
+      <h2>Hello </h2>
+       <ul>
+        <li>yum</li>
+        {/* filter the blogpost by user id  */}
+       {data?.blogPosts?.filter((item: any)=>item.author._id === userId)
+       .map((item: any ) => (
+        <li key={item._id}>{item.title}</li>
+      ))}
+    </ul>
+    </div>
+   
+    </>
+    
+    
+
    
 }
