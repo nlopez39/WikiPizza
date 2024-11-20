@@ -1,0 +1,19 @@
+.list-group{
+    display:flex; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+}
+.list-group-item {
+    margin-bottom: 10px;
+    width: 50%; /* Adjust the width of the form */
+    max-width: 600px; /* Optional: limit the maximum width */
+    padding: 20px; /* Optional: add padding */
+    background-color: #f9f9f9; /* Optional: background color */
+    border-radius: 8px; /* Optional: rounded corners */
+} 
+a.list-group-item:hover{
+    background-color: rgb(188, 199, 199);
+
+}

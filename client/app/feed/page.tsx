@@ -1,5 +1,5 @@
 "use client";
-
+import './style.css';
 import React, { useState, useContext} from 'react';
 
 import { jwtDecode } from "jwt-decode";
