@@ -52,8 +52,8 @@ export  function NavLinks(){
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
         <li className="nav-item">
-        <Link className={`nav-link ${pathname === '/blogpost' ? 'active' : ''}`} href="/blogpost">
-       Blog
+        <Link className={`nav-link ${pathname === '/create' ? 'active' : ''}`} href="/create">
+       Create
       </Link>
         </li>
         <li className="nav-item">
