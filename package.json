@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "node":"23.2.0",
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.11.0",
     "apollo-server": "^3.13.0",
@@ -14,6 +13,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.5.4"
+   
   },
   "scripts": {
     "start": "node server.js",
