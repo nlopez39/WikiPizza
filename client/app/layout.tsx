@@ -1,5 +1,5 @@
 "use client";
-import { NavLinks } from '@/app/ui/nav-links'
+import { NavLinks } from '../app/ui/nav-links'
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   ApolloClient,
