@@ -18,13 +18,15 @@
   "scripts": {
     "start": "cd client && npm start",
     "build": "cd client && npm run build",
-  "lint": "cd client && npm run lint",
-  "server": "cd server && node server.js",
-  "client": "cd client && npm run dev",
-  "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "lint": "cd client && npm run lint",
+    "server": "cd server && node server.js",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
-    "@types/graphql": "^14.2.3"
+    "@types/graphql": "^14.2.3",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.7.2"
   }
 }
