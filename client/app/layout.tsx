@@ -15,7 +15,9 @@ import { setContext } from "@apollo/client/link/context";
 
 // Construct the main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: process.env.NODE_ENV === "production"
+  ? "https://wiki-pizza-1ff0e13e79b3.herokuapp.com//graphql" // Replace with your Heroku backend URL
+  : "http://localhost:3001/graphql",
   credentials: 'include', 
 });
 
